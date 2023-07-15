@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ASAPSystems.Task.Application\ASAPSystems.Task.Application.csproj" />
+    <ProjectReference Include="..\ASAPSystems.Task.Common\ASAPSystems.Task.Common.csproj" />
+    <ProjectReference Include="..\ASAPSystems.Task.IApplication\ASAPSystems.Task.IApplication.csproj" />
+    <ProjectReference Include="..\ASAPSystems.Task.Infrastructure.EntityService\ASAPSystems.Task.Infrastructure.EntityService.csproj" />
+    <ProjectReference Include="..\ASAPSystems.Task.Infrastructure.IEntityService\ASAPSystems.Task.Infrastructure.IEntityService.csproj" />
+  </ItemGroup>
+
+</Project>

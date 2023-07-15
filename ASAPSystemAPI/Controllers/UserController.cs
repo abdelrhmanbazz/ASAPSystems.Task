@@ -5,6 +5,8 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace ASAPSystemAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : Controller
     {
         #region PROP

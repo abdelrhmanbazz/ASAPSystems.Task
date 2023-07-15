@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,10 +63,9 @@ namespace ASAPSystems.Task.Application.AppService
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
             }
             return httpStatusCodeWithMessageDTO;
         }

@@ -2,6 +2,8 @@
 using ASAPSystems.Task.IApplication.IAppService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
+using System;
 
 namespace ASAPSystemAPI.Controllers
 {
@@ -30,10 +32,10 @@ namespace ASAPSystemAPI.Controllers
             {
                 response = _addressAppService.InsertAddress(addressDto);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-
-                throw;
+                _logger.LogError(exception, MethodBase.GetCurrentMethod().Name);
+                return BadRequest(exception.Message);
             }
             return new ObjectResult(response.HttpResponseMessage)
             {

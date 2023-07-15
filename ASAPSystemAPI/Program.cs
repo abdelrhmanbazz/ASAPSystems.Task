@@ -5,11 +5,16 @@ using ASAPSystems.Task.Infrastructure.EntityService.Registeration;
 using ASAPSystems.Task.Application.Registeration;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using NLog;
+using NLog.Web;
+
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container.builder.Logging.ClearProviders();
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

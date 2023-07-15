@@ -1,4 +1,5 @@
-﻿using ASAPSystems.Task.Core.Entity.Entities;
+﻿using ASAPSystems.Task.Common.DTOs;
+using ASAPSystems.Task.Core.Entity.Entities;
 using ASAPSystems.Task.Infrastructure.EntityService.BaseEntityServices;
 using ASAPSystems.Task.Infrastructure.EntityService.Context;
 using ASAPSystems.Task.Infrastructure.IEntityService.EntityServices;
@@ -81,6 +82,33 @@ namespace ASAPSystems.Task.Infrastructure.EntityService.EntityServices
             }
             return isDeleted;
         }
+        public PersonWithAdressDto SearchByPersonNameAndCity(string personName, string City)
+        {
+            PersonWithAdressDto personWithAdressDto = new PersonWithAdressDto(); 
+            try
+            {
+ 
+               Person person = GetWhere(x => x.PersonName == personName && x.Address.City == City && x.AddressId == x.Address.AddressId, "Address").FirstOrDefault();
+                if (person != null)
+                {
+                    personWithAdressDto.PersonName = person.PersonName;
+                    personWithAdressDto.Age = person.Age;
+                    personWithAdressDto.Country = person.Address.Country;
+                    personWithAdressDto.City = person.Address.City;
+                    personWithAdressDto.Street = person.Address.Street;
+                    personWithAdressDto.zip = person.Address.zip;
+                }
+
+            }
+            catch (Exception rr)
+            {
+
+                throw;
+            }
+            return personWithAdressDto;
+        }
+     
+
         #endregion
     }
 }

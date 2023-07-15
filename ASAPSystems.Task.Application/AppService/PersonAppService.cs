@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -63,10 +64,9 @@ namespace ASAPSystems.Task.Application.AppService
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
             }
             return response;
         }
@@ -124,10 +124,9 @@ namespace ASAPSystems.Task.Application.AppService
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
             }
             return response;
         }
@@ -165,10 +164,9 @@ namespace ASAPSystems.Task.Application.AppService
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
             }
             return response;
         }
@@ -206,12 +204,24 @@ namespace ASAPSystems.Task.Application.AppService
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
             }
             return response;
+        }
+        public PersonWithAdressDto SerarchByPersonAndCity(string personName, string city)
+        {
+            PersonWithAdressDto personWithAdressDto = new PersonWithAdressDto();
+            try
+            {
+                personWithAdressDto = _UnitOfWork.Person.SearchByPersonNameAndCity(personName, city);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
+            }
+            return personWithAdressDto;
         }
         #endregion
     }

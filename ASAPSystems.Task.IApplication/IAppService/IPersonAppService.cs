@@ -14,5 +14,6 @@ namespace ASAPSystems.Task.IApplication.IAppService
         ResponseType<PersonWithAdressDto> GetPersonById(int personId);
         Response UpdatePerson(PersonWithAdressDto personWithAdressDto);
         Response DeletePerson(int personId);
+        PersonWithAdressDto SerarchByPersonAndCity(string personName, string city);
     }
 }

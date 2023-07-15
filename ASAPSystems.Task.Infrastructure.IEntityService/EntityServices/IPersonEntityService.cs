@@ -1,4 +1,5 @@
-﻿using ASAPSystems.Task.Core.Entity.Entities;
+﻿using ASAPSystems.Task.Common.DTOs;
+using ASAPSystems.Task.Core.Entity.Entities;
 using ASAPSystems.Task.Infrastructure.IEntityService.BaseEntityServices;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace ASAPSystems.Task.Infrastructure.IEntityService.EntityServices
         Person GetPersonById(int PersonId);
         bool UpdatePerson(Person Person);
         bool DeletePerson(Person person);
+        PersonWithAdressDto SearchByPersonNameAndCity(string personName, string City);
     }
 }

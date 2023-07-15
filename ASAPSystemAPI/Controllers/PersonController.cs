@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection;
 
 namespace ASAPSystemAPI.Controllers
 {
@@ -33,16 +34,17 @@ namespace ASAPSystemAPI.Controllers
             {
                 response = _personAppService.InsertPerson(personDto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
+                return BadRequest(new { message = ex.Message });
             }
             return new ObjectResult(response.HttpResponseMessage)
             {
                 StatusCode = (int)response.HttpStatusCode
             };
         }
+
         [HttpGet]
         [Route("GetPersonById")]
         public IActionResult GetPersonById(int PersonId)
@@ -54,6 +56,7 @@ namespace ASAPSystemAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
                 return BadRequest(new { message = ex.Message });
             }
             return Ok(new ResponseType<PersonWithAdressDto>()
@@ -63,6 +66,7 @@ namespace ASAPSystemAPI.Controllers
                 HttpResponseMessage = $"success"
             });
         }
+        [Authorize(Roles = "user")]
         [HttpPost]
         [Route("UpdatePerson")]
         public IActionResult UpdatePerson(PersonWithAdressDto personWithAdressDto)
@@ -72,16 +76,17 @@ namespace ASAPSystemAPI.Controllers
             {
                 response = _personAppService.UpdatePerson(personWithAdressDto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
+                return BadRequest(new { message = ex.Message });
             }
             return new ObjectResult(response.HttpResponseMessage)
             {
                 StatusCode = (int)response.HttpStatusCode
             };
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [Route("DeletePerson")]
         public IActionResult DeletePerson(int personId)
@@ -91,15 +96,32 @@ namespace ASAPSystemAPI.Controllers
             {
                 response = _personAppService.DeletePerson(personId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
+                return BadRequest(new { message = ex.Message });
             }
             return new ObjectResult(response.HttpResponseMessage)
             {
                 StatusCode = (int)response.HttpStatusCode
             };
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("SearchByPersonNameAndCity")]
+        public IActionResult SearchByPersonNameAndCity(string personName, string City)
+        {
+
+            try
+            {
+                return Ok(_personAppService.SerarchByPersonAndCity(personName, City));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, MethodBase.GetCurrentMethod().Name);
+                return BadRequest(new { message = ex.Message });
+            }
+
         }
     }
 }
